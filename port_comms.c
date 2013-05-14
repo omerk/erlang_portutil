@@ -2,12 +2,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include <erl_interface.h>
 #include <ei.h>
 
 #include "port_comms.h"
-		  
+
+
 int
-read_cmd (char *buf)
+read_cmd (byte *buf)
 {
 	int len;
 
@@ -19,27 +21,43 @@ read_cmd (char *buf)
 	return read_exact(buf, len);
 }
 
-int
-write_cmd (ei_x_buff *buf)
+
+write_cmd(byte *buf, int len)
 {
-	char li;
+  byte li;
 
-	li = (buf->index >> 8) & 0xff;
-	write_exact(&li, 1);
+  li = (len >> 8) & 0xff;
+  write_exact(&li, 1);
+  
+  li = len & 0xff;
+  write_exact(&li, 1);
 
-	li = buf->index & 0xff;
-	write_exact(&li, 1);
-
-	return write_exact(buf->buff, buf->index);
+  return write_exact(buf, len);
 }
 
 int
-read_exact (char *buf, int len)
+write_cmd_eterm (ETERM *t)
+{
+   byte buf[1024];
+
+   if (erl_encode(t, buf)!=0)
+   {
+     return write_cmd(buf, erl_term_len(t));
+   } else
+   {
+      return 0;
+   }
+}
+
+int
+read_exact (byte *buf, int len)
 {
 	int i, got = 0;
 
 	do {
-		if ( (i = read(STDIN_FILENO, buf+got, len-got) ) <= 0 ){ //STDIN_FILENO = 0
+		if ( (i = read(STDIN_FILENO, buf+got, len-got) ) <= 0 ){ //STDIN_FILENO
+                                                                         //=
+                                                                         //0
 			return i;
 		}
 		got += i;
@@ -49,7 +67,7 @@ read_exact (char *buf, int len)
 }
 
 int
-write_exact (char *buf, int len)
+write_exact (byte *buf, int len)
 {
 	int i, wrote = 0;
 

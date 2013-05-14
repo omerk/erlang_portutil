@@ -1,12 +1,16 @@
+typedef unsigned char byte;
 
 int
-read_cmd (char *buf);
+read_cmd (byte *buf);
 
 int
-write_cmd (ei_x_buff *buf);
+write_cmd(byte *buf, int len);
 
 int
-read_exact (char *buf, int len);
+write_cmd_eterm (ETERM *t);
 
 int
-write_exact (char *buf, int len);
+read_exact (byte *buf, int len);
+
+int
+write_exact (byte *buf, int len);
