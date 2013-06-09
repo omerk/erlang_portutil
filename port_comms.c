@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <malloc.h>
 
 #include <erl_interface.h>
 #include <ei.h>
@@ -22,6 +23,7 @@ read_cmd (byte *buf)
 }
 
 
+int
 write_cmd(byte *buf, int len)
 {
   byte li;
