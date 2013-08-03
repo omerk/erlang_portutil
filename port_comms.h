@@ -4,13 +4,14 @@ int
 read_cmd (byte *buf);
 
 int
-write_cmd(byte *buf, int len);
+read_exact (byte *buf, int len);
+
+int
+write_cmd (byte *buf, int len);
 
 int
 write_cmd_eterm (ETERM *t);
 
 int
-read_exact (byte *buf, int len);
-
-int
 write_exact (byte *buf, int len);
+
