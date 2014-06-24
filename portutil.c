@@ -21,7 +21,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <malloc.h>
 
 #include <erl_interface.h>
 #include <ei.h>
