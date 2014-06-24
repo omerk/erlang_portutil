@@ -1,5 +1,6 @@
 CC=gcc
-EILOCN:=$(shell find /usr/local/lib/erlang /usr/lib/erlang -name ei.h -printf '%h\n' 2> /dev/null | head -1)
+EIFILE:=$(shell find /usr/local/lib/erlang /usr/lib/erlang -name ei.h 2> /dev/null | head -1)
+EILOCN:=$(shell dirname $(EIFILE) ) 
 CFLAGS=-Wall -std=c99 -I$(EILOCN)
 
 all: portutil.o
