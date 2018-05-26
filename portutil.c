@@ -21,7 +21,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+#ifdef HAVE_MALLOC_H
 #include <malloc.h>
+#endif
 
 #include <erl_interface.h>
 #include <ei.h>
