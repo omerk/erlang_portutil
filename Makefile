@@ -1,5 +1,5 @@
 CC=gcc
-EILOCN:=$(shell find /usr/local/lib/erlang /usr/lib/erlang -name ei.h -printf '%h\n' 2> /dev/null | head -1)
+EILOCN:=$(shell erl -hidden -eval 'io:format("~p", [code:root_dir()]).' -s erlang halt | grep '1>' | sed 's/"\(.*\)"1>/\1\/usr\/include/')
 CFLAGS=-Wall -std=c99 -I$(EILOCN)
 
 all: portutil.o
